@@ -1,0 +1,3 @@
+../Core/Src/MPU6050.c:14:5:MPU6050_Init	40	static
+../Core/Src/MPU6050.c:47:19:MPU6050_isReady	16	static
+../Core/Src/MPU6050.c:52:6:MPU6050_read	32	static
