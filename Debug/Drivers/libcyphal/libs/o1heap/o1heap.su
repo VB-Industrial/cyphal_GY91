@@ -1,0 +1,12 @@
+../Drivers/libcyphal/libs/o1heap/o1heap.c:175:29:log2Floor	16	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:182:29:log2Ceil	16	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:192:23:pow2	16	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:197:23:roundUpToPowerOf2	16	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:205:21:interlink	16	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:215:21:rebin	24	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:236:21:unbin	24	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:264:17:o1heapInit	32	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:312:7:o1heapAllocate	64	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:399:6:o1heapFree	32	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:475:6:o1heapDoInvariantsHold	64	static
+../Drivers/libcyphal/libs/o1heap/o1heap.c:514:19:o1heapGetDiagnostics	48	static

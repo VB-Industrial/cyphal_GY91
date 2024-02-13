@@ -1,0 +1,273 @@
+#include "main.h"
+
+#include <memory>
+
+#include "cyphal/cyphal.h"
+#include "cyphal/providers/G4CAN.h"
+#include "cyphal/allocators/sys/sys_allocator.h"
+#include "cyphal/subscriptions/subscription.h"
+
+#include "uavcan/node/Heartbeat_1_0.h"
+#include "uavcan/primitive/scalar/Integer32_1_0.h"
+
+TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
+TYPE_ALIAS(U_INT, uavcan_primitive_scalar_Integer32_1_0)
+
+std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
+std::shared_ptr<CyphalInterface> interface;
+
+
+void error_handler() { Error_Handler(); }
+// Тут не нужен точный таймер, поэтому так
+uint64_t micros_64() { return HAL_GetTick() * 1000; }
+UtilityConfig utilities(micros_64, error_handler);
+
+class HBeatReader: public AbstractSubscription<HBeat> {
+public:
+    HBeatReader(InterfacePtr interface): AbstractSubscription<HBeat>(interface,
+        // Тут параметры - port_id, transfer kind или только port_id
+        uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
+    ) {};
+    void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {
+    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    }
+};
+
+class IntReader: public AbstractSubscription<U_INT> {
+public:
+	IntReader(InterfacePtr interface): AbstractSubscription<U_INT>(interface, 1001) {};
+    void handler(const uavcan_primitive_scalar_Integer32_1_0& hbeat, CanardRxTransfer* transfer) override {
+    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    }
+};
+
+HBeatReader* h_reader;
+IntReader* i_reader;
+
+
+extern "C" {
+
+void send_int() {
+	static uint8_t int_buffer[U_INT::buffer_size];
+	static CanardTransferID int_transfer_id = 0;
+	//static uint32_t uptime = 0;
+	U_INT::Type int_msg = {.value=10};
+    interface->send_cyphal_default_msg<U_INT>(
+		&int_msg,
+		int_buffer,
+		1001,
+		&int_transfer_id
+	);
+}
+
+void heartbeat() {
+	static uint8_t hbeat_buffer[HBeat::buffer_size];
+	static CanardTransferID hbeat_transfer_id = 0;
+	static uint32_t uptime = 0;
+    uavcan_node_Heartbeat_1_0 heartbeat_msg = {
+        .uptime = uptime,
+        .health = {uavcan_node_Health_1_0_NOMINAL},
+        .mode = {uavcan_node_Mode_1_0_OPERATIONAL}
+    };
+    interface->send_cyphal_default_msg<HBeat>(
+		&heartbeat_msg,
+		hbeat_buffer,
+		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
+		&hbeat_transfer_id
+	);
+    uptime += 1;
+
+}
+
+void setup_cyphal(FDCAN_HandleTypeDef* handler) {
+	interface = std::shared_ptr<CyphalInterface>(
+		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
+		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, 98, handler, 400, utilities)
+	);
+	h_reader = new HBeatReader(interface);
+	i_reader = new IntReader(interface);
+}
+
+void cyphal_loop() {
+    interface->loop();
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#include <cy_impl.hpp>
+//#include "main.h"
+//
+//
+//#define JS_PUB_PORT_ID 1337
+//#define JS_SUB_PORT_ID 1338
+//
+//static uint32_t node_id = 0;
+//
+//TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
+//TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
+//TYPE_ALIAS(JS_msg_read, reg_udral_physics_kinematics_rotation_Planar_0_1)
+//
+//std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
+//std::shared_ptr<CyphalInterface> interface;
+//
+//static FDCAN_FilterTypeDef sFilterConfig;
+//
+//void error_handler() { Error_Handler(); }
+//// Тут не нужен точный таймер, поэтому так
+//uint64_t micros_64() { return HAL_GetTick() * 1000; }
+//UtilityConfig utilities(micros_64, error_handler);
+//
+//
+//
+//class JSReader: public AbstractSubscription<JS_msg_read> {
+//public:
+//    JSReader(InterfacePtr interface): AbstractSubscription<JS_msg_read>(interface,
+//        // Тут параметры - port_id, transfer kind или только port_id
+//    	JS_SUB_PORT_ID
+//    ) {};
+//    void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_msg_read, CanardRxTransfer* transfer) override {
+//    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//    }
+//};
+//
+//
+//
+//
+//class HBeatReader: public AbstractSubscription<HBeat> {
+//public:
+//    HBeatReader(InterfacePtr interface): AbstractSubscription<HBeat>(interface,
+//        // Тут параметры - port_id, transfer kind или только port_id
+//        uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
+//    ) {};
+//    void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {
+//    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//    }
+//};
+//
+//
+//JSReader * jsreader;
+//HBeatReader * hbreader;
+//
+////void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
+////{
+////	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+////};
+//
+//extern "C" {
+//void send_js() //(float * position, float * velocity, float * effort)
+//{
+//	static uint8_t js_msg_buffer[JS_msg::buffer_size];
+//	static CanardTransferID js_msg_transfer_id = 0;
+//	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
+//	{
+//			.angular_position = 1.2, //*position,
+//			.angular_velocity = 2.3, //*velocity,
+//			.angular_acceleration = 4.5 //*effort,
+//	};
+//
+//	interface->send_cyphal_default_msg<JS_msg>(
+//			&js_msg,
+//			js_msg_buffer,
+//			JS_PUB_PORT_ID,
+//			&js_msg_transfer_id
+//		);
+//
+//}
+//
+//void heartbeat() {
+//	static CanardTransferID hbeat_transfer_id = 0;
+//	static uint8_t hbeat_buffer[HBeat::buffer_size];
+//	static uint32_t uptime = 0;
+//	uavcan_node_Heartbeat_1_0 heartbeat_msg = {
+//    		heartbeat_msg.uptime = uptime,
+//			heartbeat_msg.health = {uavcan_node_Health_1_0_NOMINAL},
+//			heartbeat_msg.mode = {uavcan_node_Mode_1_0_OPERATIONAL}
+//	};
+//
+//
+//    interface->send_cyphal_default_msg<HBeat>(
+//		&heartbeat_msg,
+//		hbeat_buffer,
+//		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
+//		&hbeat_transfer_id
+//	);
+//
+//    uptime += 1;
+//}
+//
+//void setup_cyphal(FDCAN_HandleTypeDef* hfdcan) {
+//
+//	CanardFilter cyphal_filter = canardMakeFilterForServices(JOINT_N);
+//
+//	//node_id = cyphal_filter.extended_can_id;
+//
+//	sFilterConfig.IdType = FDCAN_EXTENDED_ID;
+//	sFilterConfig.FilterIndex = 0;
+//	sFilterConfig.FilterType = FDCAN_FILTER_RANGE; //FDCAN_FILTER_MASK;
+//	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+//	sFilterConfig.FilterID1 = 0x0;//cyphal_filter.extended_can_id;
+//	sFilterConfig.FilterID2 = 0x1FFFFFFF;//cyphal_filter.extended_mask;
+//
+//
+//	  if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
+//	      Error_Handler();
+//	  }
+//	  if (HAL_FDCAN_ConfigTxDelayCompensation(hfdcan, 5, 0) != HAL_OK) {
+//	      Error_Handler();
+//	  }
+//	  if (HAL_FDCAN_EnableTxDelayCompensation(hfdcan) != HAL_OK) {
+//	      Error_Handler();
+//	  }
+//
+////	  	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+////	  	{
+////	  	  Error_Handler();
+////	  	}
+//
+//	  HAL_FDCAN_Start(hfdcan);
+//
+//
+//	interface = std::shared_ptr<CyphalInterface>(
+//		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
+//		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, JOINT_N, hfdcan, 400, utilities)
+//	);
+//	jsreader = new JSReader(interface);
+//	hbreader = new HBeatReader(interface);
+//}
+//
+//
+//void cyphal_loop() {
+//    interface->loop();
+//}
+//
+//}
+//
