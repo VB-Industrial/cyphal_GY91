@@ -12,11 +12,11 @@
 #include "uavcan/primitive/scalar/Integer32_1_0.h"
 #include "reg/udral/physics/kinematics/rotation/Planar_0_1.h"
 #include "reg/udral/physics/kinematics/cartesian/Twist_0_1.h"
-
+#include "reg/udral/physics/kinematics/cartesian/State_0_1.h"
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
-TYPE_ALIAS(Twist, reg_udral_physics_kinematics_cartesian_Twist_0_1)
+TYPE_ALIAS(State, reg_udral_physics_kinematics_cartesian_State_0_1)
 
 std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
 std::shared_ptr<CyphalInterface> interface;
@@ -77,16 +77,28 @@ void send_JS(float* pos, float* vel, float* eff) {
 
 void send_IMU(float* av_1, float* av_2, float* av_3, float* aa_1, float* aa_2, float* aa_3)
 {
-	static uint8_t twist_buffer[Twist::buffer_size];
+	static uint8_t state_buffer[State::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
-	reg_udral_physics_kinematics_cartesian_Twist_0_1 twist_msg =
+
+	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+
+	//uavcan_si_unit_angle_Quaternion_1_0 q_orient = {*av_1, *av_2, *av_3, *av_3};
+	reg_udral_physics_kinematics_cartesian_Pose_0_1 imu_pose;
+	imu_pose.orientation = {*av_1, *av_2, *av_3, *aa_3};
+	imu_pose.position = {*aa_1, *aa_2, *aa_3};
+
+	reg_udral_physics_kinematics_cartesian_Twist_0_1 imu_twist;
+	imu_twist.angular = {*av_1, *av_2, *av_3};
+	imu_twist.linear = {*aa_1, *aa_2, *aa_3};
+
+	reg_udral_physics_kinematics_cartesian_State_0_1 state_msg =
 	{
-			.linear = {*av_1, *av_2, *av_3},
-			.angular = {*aa_1, *aa_2, *aa_3}
+			.pose = imu_pose,
+			.twist = imu_twist
 	};
-    interface->send_cyphal_default_msg<Twist>(
-		&twist_msg,
-		twist_buffer,
+    interface->send_cyphal_default_msg<State>(
+		&state_msg,
+		state_buffer,
 		AGENT_IMU_PORT,
 		&int_transfer_id
 	);

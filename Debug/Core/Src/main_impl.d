@@ -51,7 +51,12 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Scalar_1_0.h \
  ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Twist_0_1.h \
  ../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Vector3_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/velocity/Vector3_1_0.h
+ ../Drivers/libcyphal/libs/uavcan/si/unit/velocity/Vector3_1_0.h \
+ ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/State_0_1.h \
+ ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Pose_0_1.h \
+ ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Point_0_1.h \
+ ../Drivers/libcyphal/libs/uavcan/si/unit/length/WideVector3_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/si/unit/angle/Quaternion_1_0.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -107,3 +112,8 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Twist_0_1.h:
 ../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Vector3_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/si/unit/velocity/Vector3_1_0.h:
+../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/State_0_1.h:
+../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Pose_0_1.h:
+../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Point_0_1.h:
+../Drivers/libcyphal/libs/uavcan/si/unit/length/WideVector3_1_0.h:
+../Drivers/libcyphal/libs/uavcan/si/unit/angle/Quaternion_1_0.h:

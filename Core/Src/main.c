@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MPU6050.h"
+#include "MPU9250.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,37 +118,31 @@ int main(void)
 
 
   MPU6050_Init(&hi2c4);
+  int16_t destination[3] = {0};
 
   while (1)
   {
-	  if (MPU6050_isReady(&hi2c4) == HAL_OK)
-	  {
-		  MPU6050_read(&x, &y, &z, &vx, &vy, &vz);
-		  send_IMU(&x, &y, &z, &vx, &vy, &vz);
-	  }
-
-//	  sprintf(msg,"%f \n\0", x);
-//	  HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-
-      cyphal_loop();
-      HAL_Delay(50);
 
 
+	  //sprintf(msg,"%f \n\0", x);
+	  //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
 
-//      uint32_t now = HAL_GetTick();
-//      if ( (now - last_hbeat) >= 100) {
-//          last_hbeat = now;
-//          heartbeat();
-//          pos += 0.01;
-//          vel += 0.01;
-//          eff += 0.01;
-//          send_JS(&pos, &vel, &eff);
-//          if(pos > 1.5)
-//          {
-//        	  pos = 0.0;
-//        	  vel = 0.0;
-//        	  eff = 0.0;
-//          }
+
+      uint32_t now = HAL_GetTick();
+      if ( (now - last_hbeat) >= 100) {
+    	  if (MPU6050_isReady(&hi2c4) == HAL_OK)
+    	  {
+    		  //MPU6050_read(&x, &y, &z, &vx, &vy, &vz);
+    		  readAccelData(&destination);
+    	  }
+
+          last_hbeat = now;
+          heartbeat();
+          sprintf(msg,"%d \n\0", destination[0]);
+          HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
+          //send_IMU(&x, &y, &z, &vx, &vy, &vz);
+      }
+          cyphal_loop();
 
   }
     /* USER CODE END WHILE */
