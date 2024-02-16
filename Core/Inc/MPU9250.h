@@ -232,7 +232,6 @@ float eInt[3] = {0.0f, 0.0f, 0.0f};              // vector to hold integral erro
    data_write[0] = subAddress;
    data_write[1] = data;
    HAL_I2C_Master_Transmit(&hi2c4, address, data_write, 2, 100);
-   //i2c.write(address, data_write, 2, 0);
 }
 
     char readByte(uint8_t address, uint8_t subAddress)
@@ -241,9 +240,7 @@ float eInt[3] = {0.0f, 0.0f, 0.0f};              // vector to hold integral erro
     char data_write[1];
     data_write[0] = subAddress;
     HAL_I2C_Master_Transmit(&hi2c4, address, data_write, 1, 100);
-    //i2c.write(address, data_write, 1, 1); // no stop
     HAL_I2C_Master_Receive(&hi2c4, address, data, 1, 100);
-    //i2c.read(address, data, 1, 0);
     return data[0]; 
 }
 
@@ -253,9 +250,7 @@ float eInt[3] = {0.0f, 0.0f, 0.0f};              // vector to hold integral erro
     char data_write[1];
     data_write[0] = subAddress;
     HAL_I2C_Master_Transmit(&hi2c4, address, data_write, 1, 100);
-    //i2c.write(address, data_write, 1, 1); // no stop
     HAL_I2C_Master_Receive(&hi2c4, address, data, count, 100);
-    //i2c.read(address, data, count, 0);
     for(int ii = 0; ii < count; ii++) {
      dest[ii] = data[ii];
     }
@@ -364,7 +359,7 @@ int16_t readTempData()
 void resetMPU9250() {
   // reset device
   writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x80); // Write a one to bit 7 reset bit; toggle reset device
-  wait(0.1);
+  HAL_Delay(1); //TODO FREERTOS delay define
   }
   
   void initAK8963(float * destination)
@@ -372,20 +367,20 @@ void resetMPU9250() {
   // First extract the factory calibration for each magnetometer axis
   uint8_t rawData[3];  // x/y/z gyro calibration data stored here
   writeByte(AK8963_ADDRESS, AK8963_CNTL, 0x00); // Power down magnetometer  
-  wait(0.01);
+  HAL_Delay(1); //TODO FREERTOS delay define
   writeByte(AK8963_ADDRESS, AK8963_CNTL, 0x0F); // Enter Fuse ROM access mode
-  wait(0.01);
+  HAL_Delay(1); //TODO FREERTOS delay define
   readBytes(AK8963_ADDRESS, AK8963_ASAX, 3, &rawData[0]);  // Read the x-, y-, and z-axis calibration values
   destination[0] =  (float)(rawData[0] - 128)/256.0f + 1.0f;   // Return x-axis sensitivity adjustment values, etc.
   destination[1] =  (float)(rawData[1] - 128)/256.0f + 1.0f;  
   destination[2] =  (float)(rawData[2] - 128)/256.0f + 1.0f; 
   writeByte(AK8963_ADDRESS, AK8963_CNTL, 0x00); // Power down magnetometer  
-  wait(0.01);
+  HAL_Delay(1); //TODO FREERTOS delay define
   // Configure the magnetometer for continuous read and highest resolution
   // set Mscale bit 4 to 1 (0) to enable 16 (14) bit resolution in CNTL register,
   // and enable continuous mode data acquisition Mmode (bits [3:0]), 0010 for 8 Hz and 0110 for 100 Hz sample rates
   writeByte(AK8963_ADDRESS, AK8963_CNTL, Mscale << 4 | Mmode); // Set magnetometer data resolution and sample ODR
-  wait(0.01);
+  HAL_Delay(1); //TODO FREERTOS delay define
 }
 
 
@@ -394,7 +389,7 @@ void initMPU9250()
  // Initialize MPU9250 device
  // wake up device
   writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x00); // Clear sleep mode bit (6), enable all sensors 
-  wait(0.1); // Delay 100 ms for PLL to get established on x-axis gyro; should check for PLL ready interrupt  
+  HAL_Delay(1); //TODO FREERTOS delay define // Delay 100 ms for PLL to get established on x-axis gyro; should check for PLL ready interrupt
 
  // get stable time source
   writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x01);  // Set clock source to be PLL with x-axis gyroscope reference, bits 2:0 = 001
@@ -453,13 +448,13 @@ void calibrateMPU9250(float * dest1, float * dest2)
   
 // reset device, reset all registers, clear gyro and accelerometer bias registers
   writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x80); // Write a one to bit 7 reset bit; toggle reset device
-  wait(0.1);  
+  HAL_Delay(1); //TODO FREERTOS delay define
    
 // get stable time source
 // Set clock source to be PLL with x-axis gyroscope reference, bits 2:0 = 001
   writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x01);  
   writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x00); 
-  wait(0.2);
+  HAL_Delay(1); //TODO FREERTOS delay define
   
 // Configure device for bias calculation
   writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x00);   // Disable all interrupts
@@ -468,7 +463,7 @@ void calibrateMPU9250(float * dest1, float * dest2)
   writeByte(MPU9250_ADDRESS, I2C_MST_CTRL, 0x00); // Disable I2C master
   writeByte(MPU9250_ADDRESS, USER_CTRL, 0x00);    // Disable FIFO and I2C master modes
   writeByte(MPU9250_ADDRESS, USER_CTRL, 0x0C);    // Reset FIFO and DMP
-  wait(0.015);
+  HAL_Delay(1); //TODO FREERTOS delay define
   
 // Configure MPU9250 gyro and accelerometer for bias calculation
   writeByte(MPU9250_ADDRESS, CONFIG, 0x01);      // Set low-pass filter to 188 Hz
@@ -482,7 +477,7 @@ void calibrateMPU9250(float * dest1, float * dest2)
 // Configure FIFO to capture accelerometer and gyro data for bias calculation
   writeByte(MPU9250_ADDRESS, USER_CTRL, 0x40);   // Enable FIFO  
   writeByte(MPU9250_ADDRESS, FIFO_EN, 0x78);     // Enable gyro and accelerometer sensors for FIFO (max size 512 bytes in MPU-9250)
-  wait(0.04); // accumulate 40 samples in 80 milliseconds = 480 bytes
+  HAL_Delay(80); //TODO FREERTOS delay define // accumulate 40 samples in 80 milliseconds = 480 bytes
 
 // At end of sample accumulation, turn off FIFO sensor read
   writeByte(MPU9250_ADDRESS, FIFO_EN, 0x00);        // Disable gyro and accelerometer sensors for FIFO

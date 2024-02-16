@@ -56,9 +56,10 @@ void Error_Handler(void);
 void cyphal_loop();
 void heartbeat();
 void send_JS(float*, float*, float*);
-void send_IMU(float* av_1, float* av_2, float* av_3, float* aa_1, float* aa_2, float* aa_3);
+void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 void setup_cyphal(FDCAN_HandleTypeDef*);
 void cyphal_can_starter(FDCAN_HandleTypeDef*);
+void delay(uint32_t);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

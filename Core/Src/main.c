@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "fdcan.h"
 #include "i2c.h"
 #include "usart.h"
@@ -27,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "MPU6050.h"
 #include "MPU9250.h"
+#include "IMU.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,6 +91,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_FDCAN1_Init();
   MX_I2C4_Init();
   MX_USART2_UART_Init();
@@ -110,37 +113,42 @@ int main(void)
 
 
   uint32_t last_hbeat = HAL_GetTick();
-  float pos = JOINT_N;
-  float vel = JOINT_N;
-  float eff = JOINT_N;
+//  float pos = JOINT_N;
+//  float vel = JOINT_N;
+//  float eff = JOINT_N;
 
-  float x,y,z,vx,vy,vz = 0;
+//  float dest1[3] = {0.0f}; //calibrations array
+//  float dest2[3] = {0.0f}; //calibrations array
+//  float mag_dest[3] = {0.0f}; //mag calibration array
 
+  //MPU6050_Init(&hi2c4);
+  //initMPU9250();
+  //initAK8963(&mag_dest);
 
-  MPU6050_Init(&hi2c4);
-  int16_t destination[3] = {0};
+  //calibrateMPU9250(&dest1, &dest2);
+
+//  int16_t accel[3] = {0};
+
+  vec_4ax linear = {0};
+  vec_4ax quat = {0};
+  vec_4ax gyro = {0};
+
+  rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
+  IMU_setup();
 
   while (1)
   {
 
-
-	  //sprintf(msg,"%f \n\0", x);
-	  //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-
-
       uint32_t now = HAL_GetTick();
       if ( (now - last_hbeat) >= 100) {
-    	  if (MPU6050_isReady(&hi2c4) == HAL_OK)
-    	  {
-    		  //MPU6050_read(&x, &y, &z, &vx, &vy, &vz);
-    		  readAccelData(&destination);
-    	  }
-
+      	  imu_get_quat(&quat);
+      	  imu_get_linear(&linear);
+      	  imu_get_gyro(&gyro);
           last_hbeat = now;
           heartbeat();
-          sprintf(msg,"%d \n\0", destination[0]);
-          HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-          //send_IMU(&x, &y, &z, &vx, &vy, &vz);
+          //sprintf(msg,"%d\n\0", q[1]);
+          //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
+          send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
       }
           cyphal_loop();
 
@@ -198,6 +206,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void delay(uint32_t delay)
+{
+	HAL_Delay(delay);
+}
+
 
 /* USER CODE END 4 */
 

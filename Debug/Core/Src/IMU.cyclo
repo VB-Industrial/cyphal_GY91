@@ -1,0 +1,32 @@
+../Core/Inc/Adafruit_Sensor.h:146:11:Adafruit_Sensor::~Adafruit_Sensor()	1
+../Core/Inc/Adafruit_Sensor.h:146:11:virtual Adafruit_Sensor::~Adafruit_Sensor()	1
+../Core/Inc/Adafruit_Sensor.h:149:16:virtual void Adafruit_Sensor::enableAutoRange(bool)	1
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/cmath:184:3:constexpr float std::cos(float)	1
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/cmath:425:3:constexpr float std::sin(float)	1
+../Core/Inc/utility/quaternion.h:40:5:imu::Quaternion::Quaternion()	1
+../Core/Inc/utility/quaternion.h:48:13:double& imu::Quaternion::w()	1
+../Core/Inc/utility/quaternion.h:52:13:double& imu::Quaternion::x()	1
+../Core/Inc/utility/quaternion.h:56:13:double& imu::Quaternion::y()	1
+../Core/Inc/utility/quaternion.h:60:13:double& imu::Quaternion::z()	1
+../Core/Src/IMU.cpp:19:6:void imu_get_quat(vec_4ax*)	2
+../Core/Src/IMU.cpp:32:6:void imu_get_linear(vec_4ax*)	2
+../Core/Src/IMU.cpp:44:6:void imu_get_gyro(vec_4ax*)	2
+../Core/Src/IMU.cpp:56:6:void imu_get_euler(vec_4ax*)	2
+../Core/Src/IMU.cpp:68:6:void IMU_setup()	2
+../Core/Src/IMU.cpp:88:6:void IMU_process()	2
+../Core/Src/IMU.cpp:98:9:uint8_t I2C_byte_receive(uint8_t)	2
+../Core/Src/IMU.cpp:107:9:uint8_t I2C_byte_transmit(uint8_t, uint8_t)	1
+../Core/Src/IMU.cpp:115:9:uint8_t I2C_n_byte_receive(uint8_t, uint8_t*, uint8_t)	2
+../Core/Src/IMU.cpp:123:6:void setRPY(float, float, float, vec_4ax*)	1
+../Core/Src/IMU.cpp:141:9:vec_4ax createQuaternionMsgFromYaw(float)	1
+../Core/Inc/utility/vector.h:77:5:imu::Vector<N>::~Vector() [with unsigned char N = 3]	1
+../Core/Inc/utility/vector.h:202:13:double& imu::Vector<N>::x() [with unsigned char N = 3]	1
+../Core/Inc/utility/vector.h:203:13:double& imu::Vector<N>::y() [with unsigned char N = 3]	1
+../Core/Inc/utility/vector.h:204:13:double& imu::Vector<N>::z() [with unsigned char N = 3]	1
+../Core/Inc/utility/vector.h:36:5:imu::Vector<N>::Vector() [with unsigned char N = 3]	1
+../Core/Inc/utility/vector.h:134:13:imu::Vector<N>& imu::Vector<N>::operator=(const imu::Vector<N>&) [with unsigned char N = 3]	2
+../Core/Src/IMU.cpp:146:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Inc/Adafruit_BNO055.h:50:7:Adafruit_BNO055::~Adafruit_BNO055()	1
+../Core/Inc/Adafruit_BNO055.h:50:7:virtual Adafruit_BNO055::~Adafruit_BNO055()	1
+../Core/Src/IMU.cpp:146:1:cpp)	1
+../Core/Src/IMU.cpp:146:1:cpp)	1

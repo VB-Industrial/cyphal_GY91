@@ -1,4 +1,7 @@
+"./Core/Src/Adafruit_BNO055.o"
+"./Core/Src/IMU.o"
 "./Core/Src/MPU6050.o"
+"./Core/Src/dma.o"
 "./Core/Src/fdcan.o"
 "./Core/Src/gpio.o"
 "./Core/Src/i2c.o"

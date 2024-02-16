@@ -75,21 +75,21 @@ void send_JS(float* pos, float* vel, float* eff) {
 	);
 }
 
-void send_IMU(float* av_1, float* av_2, float* av_3, float* aa_1, float* aa_2, float* aa_3)
+void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz)
 {
 	static uint8_t state_buffer[State::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
 
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
 
 	//uavcan_si_unit_angle_Quaternion_1_0 q_orient = {*av_1, *av_2, *av_3, *av_3};
 	reg_udral_physics_kinematics_cartesian_Pose_0_1 imu_pose;
-	imu_pose.orientation = {*av_1, *av_2, *av_3, *aa_3};
-	imu_pose.position = {*aa_1, *aa_2, *aa_3};
+	imu_pose.orientation = {*qw, *qx, *qy, *qz};
+	//imu_pose.position =
 
 	reg_udral_physics_kinematics_cartesian_Twist_0_1 imu_twist;
-	imu_twist.angular = {*av_1, *av_2, *av_3};
-	imu_twist.linear = {*aa_1, *aa_2, *aa_3};
+	imu_twist.angular = {*ax, *ay, *az};
+	imu_twist.linear = {*gx, *gy, *gz};
 
 	reg_udral_physics_kinematics_cartesian_State_0_1 state_msg =
 	{

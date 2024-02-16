@@ -56,7 +56,7 @@ C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Src/main_impl.cpp:46:2:JSReader::JSReader(InterfacePtr)	32	static
 ../Core/Src/main_impl.cpp:50:10:virtual void JSReader::handler(const reg_udral_physics_kinematics_rotation_Planar_0_1&, CanardRxTransfer*)	24	static
 ../Core/Src/main_impl.cpp:61:6:void send_JS(float*, float*, float*)	48	static
-../Core/Src/main_impl.cpp:78:6:void send_IMU(float*, float*, float*, float*, float*, float*)	176	static
+../Core/Src/main_impl.cpp:78:6:void send_IMU(float*, float*, float*, float*, float*, float*, float*, float*, float*, float*)	168	static
 ../Core/Src/main_impl.cpp:107:6:void heartbeat()	24	static
 ../Core/Src/main_impl.cpp:126:6:void setup_cyphal(FDCAN_HandleTypeDef*)	56	static
 ../Core/Src/main_impl.cpp:135:6:void cyphal_loop()	8	static
