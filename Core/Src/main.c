@@ -113,21 +113,6 @@ int main(void)
 
 
   uint32_t last_hbeat = HAL_GetTick();
-//  float pos = JOINT_N;
-//  float vel = JOINT_N;
-//  float eff = JOINT_N;
-
-//  float dest1[3] = {0.0f}; //calibrations array
-//  float dest2[3] = {0.0f}; //calibrations array
-//  float mag_dest[3] = {0.0f}; //mag calibration array
-
-  //MPU6050_Init(&hi2c4);
-  //initMPU9250();
-  //initAK8963(&mag_dest);
-
-  //calibrateMPU9250(&dest1, &dest2);
-
-//  int16_t accel[3] = {0};
 
   vec_4ax linear = {0};
   vec_4ax quat = {0};
@@ -150,7 +135,7 @@ int main(void)
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
       }
-          cyphal_loop();
+      cyphal_loop();
 
   }
     /* USER CODE END WHILE */

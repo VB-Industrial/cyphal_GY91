@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  0002e8ab  00000000  00000000  00078a06  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0002a425  00000000  00000000  000a72b1  2**0
+ 18 .debug_line   0002a421  00000000  00000000  000a72b1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00112278  00000000  00000000  000d16d6  2**0
+ 19 .debug_str    00112278  00000000  00000000  000d16d2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00009dd0  00000000  00000000  001e3950  2**2
+ 20 .debug_frame  00009dd0  00000000  00000000  001e394c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006b  00000000  00000000  001ed720  2**0
+ 21 .debug_line_str 0000006b  00000000  00000000  001ed71c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3331,9 +3331,9 @@ void MX_FDCAN1_Init(void)
  8001ed4:	4b09      	ldr	r3, [pc, #36]	; (8001efc <MX_FDCAN1_Init+0x88>)
  8001ed6:	2200      	movs	r2, #0
  8001ed8:	635a      	str	r2, [r3, #52]	; 0x34
-  hfdcan1.Init.ExtFiltersNbr = 1;
+  hfdcan1.Init.ExtFiltersNbr = 3;
  8001eda:	4b08      	ldr	r3, [pc, #32]	; (8001efc <MX_FDCAN1_Init+0x88>)
- 8001edc:	2201      	movs	r2, #1
+ 8001edc:	2203      	movs	r2, #3
  8001ede:	639a      	str	r2, [r3, #56]	; 0x38
   hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
  8001ee0:	4b06      	ldr	r3, [pc, #24]	; (8001efc <MX_FDCAN1_Init+0x88>)
@@ -4057,10 +4057,6 @@ int main(void)
  8002322:	f003 ffeb 	bl	80062fc <HAL_GetTick>
  8002326:	64f8      	str	r0, [r7, #76]	; 0x4c
 
-  //calibrateMPU9250(&dest1, &dest2);
-
-//  int16_t accel[3] = {0};
-
   vec_4ax linear = {0};
  8002328:	f107 0324 	add.w	r3, r7, #36	; 0x24
  800232c:	2200      	movs	r2, #0
@@ -4152,7 +4148,7 @@ int main(void)
  80023da:	4623      	mov	r3, r4
  80023dc:	f001 fc26 	bl	8003c2c <send_IMU>
       }
-          cyphal_loop();
+      cyphal_loop();
  80023e0:	f001 fd06 	bl	8003df0 <cyphal_loop>
   {
  80023e4:	e7bf      	b.n	8002366 <main+0x76>
