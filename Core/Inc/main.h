@@ -73,7 +73,7 @@ void delay(uint32_t);
 
 
 
-#define JOINT_N 5
+#define JOINT_N 4
 #define WHO_AM_I_REG 0x75
 #define PWR_MGMT_1_REG 0x6B
 #define SMPLRT_DIV_REG 0x19

@@ -1,8 +1,8 @@
 ../Core/Inc/Adafruit_Sensor.h:146:11:Adafruit_Sensor::~Adafruit_Sensor()	16	static
 ../Core/Inc/Adafruit_Sensor.h:146:11:virtual Adafruit_Sensor::~Adafruit_Sensor()	16	static
 ../Core/Inc/Adafruit_Sensor.h:149:16:virtual void Adafruit_Sensor::enableAutoRange(bool)	16	static
-C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/cmath:184:3:constexpr float std::cos(float)	16	static
-C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/cmath:425:3:constexpr float std::sin(float)	16	static
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cmath:184:3:constexpr float std::cos(float)	16	static
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cmath:425:3:constexpr float std::sin(float)	16	static
 ../Core/Inc/utility/quaternion.h:40:5:imu::Quaternion::Quaternion()	16	static
 ../Core/Inc/utility/quaternion.h:48:13:double& imu::Quaternion::w()	16	static
 ../Core/Inc/utility/quaternion.h:52:13:double& imu::Quaternion::x()	16	static

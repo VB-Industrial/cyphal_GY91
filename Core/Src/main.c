@@ -118,22 +118,25 @@ int main(void)
   vec_4ax quat = {0};
   vec_4ax gyro = {0};
 
-  rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
-  IMU_setup();
+  //rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
+  //IMU_setup();
+
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
 
   while (1)
   {
 
       uint32_t now = HAL_GetTick();
       if ( (now - last_hbeat) >= 100) {
-      	  imu_get_quat(&quat);
-      	  imu_get_linear(&linear);
-      	  imu_get_gyro(&gyro);
+      	  //imu_get_quat(&quat);
+      	  //imu_get_linear(&linear);
+      	  //imu_get_gyro(&gyro);
           last_hbeat = now;
           heartbeat();
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
+          HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
       }
       cyphal_loop();
 

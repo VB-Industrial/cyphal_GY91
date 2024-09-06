@@ -4,16 +4,16 @@
 ../Core/Inc/Adafruit_Sensor.h:149:16:virtual void Adafruit_Sensor::enableAutoRange(bool)	16	static
 ../Core/Inc/utility/quaternion.h:42:5:imu::Quaternion::Quaternion(double, double, double, double)	48	static
 ../Core/Src/Adafruit_BNO055.cpp:45:1:Adafruit_BNO055::Adafruit_BNO055(int32_t, uint8_t)	24	static
-../Core/Src/Adafruit_BNO055.cpp:60:6:bool Adafruit_BNO055::begin(Adafruit_BNO055::adafruit_bno055_opmode_t)	24	static
-../Core/Src/Adafruit_BNO055.cpp:133:6:void Adafruit_BNO055::setMode(Adafruit_BNO055::adafruit_bno055_opmode_t)	16	static
-../Core/Src/Adafruit_BNO055.cpp:145:6:void Adafruit_BNO055::setAxisRemap(Adafruit_BNO055::adafruit_bno055_axis_remap_config_t)	24	static
-../Core/Src/Adafruit_BNO055.cpp:163:6:void Adafruit_BNO055::setAxisSign(Adafruit_BNO055::adafruit_bno055_axis_remap_sign_t)	24	static
+../Core/Src/Adafruit_BNO055.cpp:60:6:bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t)	24	static
+../Core/Src/Adafruit_BNO055.cpp:133:6:void Adafruit_BNO055::setMode(adafruit_bno055_opmode_t)	16	static
+../Core/Src/Adafruit_BNO055.cpp:145:6:void Adafruit_BNO055::setAxisRemap(adafruit_bno055_axis_remap_config_t)	24	static
+../Core/Src/Adafruit_BNO055.cpp:163:6:void Adafruit_BNO055::setAxisSign(adafruit_bno055_axis_remap_sign_t)	24	static
 ../Core/Src/Adafruit_BNO055.cpp:182:6:void Adafruit_BNO055::setExtCrystalUse(bool)	24	static
 ../Core/Src/Adafruit_BNO055.cpp:207:6:void Adafruit_BNO055::getSystemStatus(uint8_t*, uint8_t*, uint8_t*)	24	static
-../Core/Src/Adafruit_BNO055.cpp:263:6:void Adafruit_BNO055::getRevInfo(Adafruit_BNO055::adafruit_bno055_rev_info_t*)	24	static
+../Core/Src/Adafruit_BNO055.cpp:263:6:void Adafruit_BNO055::getRevInfo(adafruit_bno055_rev_info_t*)	24	static
 ../Core/Src/Adafruit_BNO055.cpp:293:6:void Adafruit_BNO055::getCalibration(uint8_t*, uint8_t*, uint8_t*, uint8_t*)	32	static
 ../Core/Src/Adafruit_BNO055.cpp:314:8:int8_t Adafruit_BNO055::getTemp()	24	static
-../Core/Src/Adafruit_BNO055.cpp:325:16:imu::Vector<3> Adafruit_BNO055::getVector(Adafruit_BNO055::adafruit_vector_type_t)	48	static
+../Core/Src/Adafruit_BNO055.cpp:325:16:imu::Vector<3> Adafruit_BNO055::getVector(adafruit_vector_type_t)	48	static
 ../Core/Src/Adafruit_BNO055.cpp:382:17:imu::Quaternion Adafruit_BNO055::getQuat()	176	static
 ../Core/Src/Adafruit_BNO055.cpp:410:6:virtual void Adafruit_BNO055::getSensor(sensor_t*)	16	static
 ../Core/Src/Adafruit_BNO055.cpp:432:6:virtual bool Adafruit_BNO055::getEvent(sensors_event_t*)	48	static
@@ -22,9 +22,9 @@
 ../Core/Src/Adafruit_BNO055.cpp:527:6:void Adafruit_BNO055::setSensorOffsets(const uint8_t*)	24	static
 ../Core/Src/Adafruit_BNO055.cpp:574:6:void Adafruit_BNO055::setSensorOffsets(const adafruit_bno055_offsets_t&)	24	static
 ../Core/Src/Adafruit_BNO055.cpp:620:6:bool Adafruit_BNO055::isFullyCalibrated()	32	static
-../Core/Src/Adafruit_BNO055.cpp:639:6:bool Adafruit_BNO055::write8(Adafruit_BNO055::adafruit_bno055_reg_t, uint8_t)	16	static
-../Core/Src/Adafruit_BNO055.cpp:651:6:uint8_t Adafruit_BNO055::read8(Adafruit_BNO055::adafruit_bno055_reg_t)	24	static
-../Core/Src/Adafruit_BNO055.cpp:665:6:bool Adafruit_BNO055::readLen(Adafruit_BNO055::adafruit_bno055_reg_t, uint8_t*, uint8_t)	24	static
+../Core/Src/Adafruit_BNO055.cpp:639:6:bool Adafruit_BNO055::write8(adafruit_bno055_reg_t, uint8_t)	16	static
+../Core/Src/Adafruit_BNO055.cpp:651:6:uint8_t Adafruit_BNO055::read8(adafruit_bno055_reg_t)	24	static
+../Core/Src/Adafruit_BNO055.cpp:665:6:bool Adafruit_BNO055::readLen(adafruit_bno055_reg_t, uint8_t*, uint8_t)	24	static
 ../Core/Inc/utility/vector.h:77:5:imu::Vector<N>::~Vector() [with unsigned char N = 3]	16	static
 ../Core/Inc/utility/vector.h:202:13:double& imu::Vector<N>::x() [with unsigned char N = 3]	16	static
 ../Core/Inc/utility/vector.h:203:13:double& imu::Vector<N>::y() [with unsigned char N = 3]	16	static

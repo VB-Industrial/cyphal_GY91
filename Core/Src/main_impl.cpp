@@ -14,9 +14,22 @@
 #include "reg/udral/physics/kinematics/cartesian/Twist_0_1.h"
 #include "reg/udral/physics/kinematics/cartesian/State_0_1.h"
 
+#include <uavcan/_register/Access_1_0.h>
+#include <uavcan/_register/List_1_0.h>
+
+extern "C" {
+
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
 TYPE_ALIAS(State, reg_udral_physics_kinematics_cartesian_State_0_1)
+
+
+TYPE_ALIAS(RegisterListRequest, uavcan_register_List_Request_1_0)
+TYPE_ALIAS(RegisterListResponse, uavcan_register_List_Response_1_0)
+
+TYPE_ALIAS(RegisterAccessRequest, uavcan_register_Access_Request_1_0)
+TYPE_ALIAS(RegisterAccessResponse, uavcan_register_Access_Response_1_0)
+
 
 std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
 std::shared_ptr<CyphalInterface> interface;
@@ -55,8 +68,28 @@ public:
 JSReader* js_reader;
 
 
+class RegisterListReader : public AbstractSubscription<RegisterListRequest> {
+public:
+    RegisterListReader(InterfacePtr interface): AbstractSubscription<RegisterListRequest>(
+        interface,
+        uavcan_register_List_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const RegisterListRequest::Type&, CanardRxTransfer*) override;
+};
 
-extern "C" {
+class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
+public:
+    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
+        interface,
+        uavcan_register_Access_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const RegisterAccessRequest::Type&, CanardRxTransfer*) override;
+};
+
+
+
 
 void send_JS(float* pos, float* vel, float* eff) {
 	static uint8_t js_buffer[JS_msg::buffer_size];
@@ -142,7 +175,7 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
 	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(1125);//JS_SUB_PORT_ID
 	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
-	CanardFilter cyphal_filter = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
+	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
 
 	static FDCAN_FilterTypeDef sFilterConfig;
 	static FDCAN_FilterTypeDef hbFilterConfig;
