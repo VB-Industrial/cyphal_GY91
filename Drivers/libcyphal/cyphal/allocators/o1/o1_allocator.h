@@ -1,8 +1,7 @@
 #pragma once
 
-#include "o1heap/o1heap.h"
-
-#include "../allocator.h"
+#include <cyphal/allocators/allocator.h>
+#include <o1heap/o1heap.h>
 
 class O1Allocator : public AbstractAllocator {
 private:

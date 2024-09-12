@@ -36,9 +36,9 @@
 
 #include <nunavut/support/serialization.h>
 #include <reg/udral/service/common/Readiness_0_1.h>
-#include <uavcan/node/Health_1_0.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <uavcan/node/Health_1_0.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/reg/udral/service/common/Heartbeat.0.1.uavcan is trying to use a serialization library that was compiled with "

@@ -2,6 +2,7 @@
 #include "ruka_joints.h"
 
 #include <memory>
+#include <cstdio>
 
 #include "cyphal/cyphal.h"
 #include "cyphal/providers/G4CAN.h"
@@ -17,7 +18,11 @@
 #include <uavcan/_register/Access_1_0.h>
 #include <uavcan/_register/List_1_0.h>
 
+#include <uavcan/node/GetInfo_1_0.h>
+
 extern "C" {
+
+extern IWDG_HandleTypeDef hiwdg;
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
@@ -34,26 +39,23 @@ TYPE_ALIAS(RegisterAccessResponse, uavcan_register_Access_Response_1_0)
 std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
 std::shared_ptr<CyphalInterface> interface;
 
-
 void error_handler() { Error_Handler(); }
-// Тут не нужен точный таймер, поэтому так
 uint64_t micros_64() { return HAL_GetTick() * 1000; }
 UtilityConfig utilities(micros_64, error_handler);
 
 class HBeatReader: public AbstractSubscription<HBeat> {
 public:
     HBeatReader(InterfacePtr interface): AbstractSubscription<HBeat>(interface,
-        // Тут параметры - port_id, transfer kind или только port_id
         uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
     ) {};
     void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {
     	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    	HAL_IWDG_Refresh(&hiwdg);
     }
 };
 
 
 HBeatReader* h_reader;
-
 
 
 class RegisterListReader : public AbstractSubscription<RegisterListRequest> {
@@ -83,12 +85,8 @@ void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, 
 	static uint8_t state_buffer[State::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
 
-	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-
-	//uavcan_si_unit_angle_Quaternion_1_0 q_orient = {*av_1, *av_2, *av_3, *av_3};
 	reg_udral_physics_kinematics_cartesian_Pose_0_1 imu_pose;
 	imu_pose.orientation = {*qw, *qx, *qy, *qz};
-	//imu_pose.position =
 
 	reg_udral_physics_kinematics_cartesian_Twist_0_1 imu_twist;
 	imu_twist.angular = {*ax, *ay, *az};
@@ -99,7 +97,7 @@ void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, 
 			.pose = imu_pose,
 			.twist = imu_twist
 	};
-    interface->send_cyphal_default_msg<State>(
+    interface->send_msg<State>(
 		&state_msg,
 		state_buffer,
 		AGENT_IMU_PORT,
@@ -116,7 +114,7 @@ void heartbeat() {
         .health = {uavcan_node_Health_1_0_NOMINAL},
         .mode = {uavcan_node_Mode_1_0_OPERATIONAL}
     };
-    interface->send_cyphal_default_msg<HBeat>(
+    interface->send_msg<HBeat>(
 		&heartbeat_msg,
 		hbeat_buffer,
 		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
@@ -128,8 +126,7 @@ void heartbeat() {
 
 void setup_cyphal(FDCAN_HandleTypeDef* handler) {
 	interface = std::shared_ptr<CyphalInterface>(
-		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
-		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
+		CyphalInterface::create_bss<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
 	);
 	h_reader = new HBeatReader(interface);
 }

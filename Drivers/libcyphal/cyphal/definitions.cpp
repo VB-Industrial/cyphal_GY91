@@ -1,4 +1,4 @@
-#include "definitions.h"
+#include <cyphal/definitions.h>
 
 #ifdef __linux__
 

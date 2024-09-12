@@ -1,4 +1,4 @@
-#include "FDCAN_generic.h"
+#include <cyphal/providers/FDCAN_generic.h>
 
 #ifdef __linux__
 #define FDCAN_DLC_BYTES_0 ((uint32_t)0x00000000U)  /*!< 0 bytes data field  */

@@ -6,7 +6,7 @@
 #include "stm32g4xx_hal.h"
 // TODO: rework this dependency
 #if __has_include("utils.h")
-#include "utils.h"
+#include <src/utils.h>
 #else
 #define CRITICAL_SECTION(code) code
 #endif

@@ -35,10 +35,10 @@
 #define UAVCAN_NODE_GET_INFO_1_0_INCLUDED_
 
 #include <nunavut/support/serialization.h>
-#include <uavcan/node/Version_1_0.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <uavcan/node/Version_1_0.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/node/430.GetInfo.1.0.uavcan is trying to use a serialization library that was compiled with "

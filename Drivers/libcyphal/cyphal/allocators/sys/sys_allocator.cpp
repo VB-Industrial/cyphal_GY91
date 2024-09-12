@@ -1,4 +1,4 @@
-#include "sys_allocator.h"
+#include <cyphal/allocators/sys/sys_allocator.h>
 #include <cstdlib>
 
 void* SystemAllocator::allocate(CanardInstance* const ins, const size_t amount) {

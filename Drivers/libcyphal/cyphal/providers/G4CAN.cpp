@@ -1,8 +1,8 @@
-#include "G4CAN.h"
+#include <cyphal/providers/G4CAN.h>
 #if (defined(STM32G474xx) || defined(STM32_G)) && defined(HAL_FDCAN_MODULE_ENABLED)
 #include <cstring>
 
-#include "FDCAN_generic.h"
+#include <cyphal/providers/FDCAN_generic.h>
 
 uint32_t G4CAN::len_to_dlc(size_t len) {
     return CanardFDCANLengthToDLC[len];
@@ -25,9 +25,7 @@ void G4CAN::can_loop() {
 }
 
 static uint8_t RxData[64] = {};
-
 bool G4CAN::read_frame(CanardFrame* rxf) {
-    // may want to check 2 FIFOs in the future
     uint32_t rx_fifo = -1;
     if (HAL_FDCAN_GetRxFifoFillLevel(handler, FDCAN_RX_FIFO0)) {
         rx_fifo = FDCAN_RX_FIFO0;

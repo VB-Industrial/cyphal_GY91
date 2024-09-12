@@ -35,9 +35,9 @@
 #define UAVCAN_FILE_LIST_0_2_INCLUDED_
 
 #include <nunavut/support/serialization.h>
-#include <uavcan/file/Path_2_0.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <uavcan/file/Path_2_0.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/file/406.List.0.2.uavcan is trying to use a serialization library that was compiled with "

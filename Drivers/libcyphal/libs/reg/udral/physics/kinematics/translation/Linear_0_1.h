@@ -35,10 +35,10 @@
 #define REG_UDRAL_PHYSICS_KINEMATICS_TRANSLATION_LINEAR_0_1_INCLUDED_
 
 #include <nunavut/support/serialization.h>
+#include <stdlib.h>
 #include <uavcan/si/unit/acceleration/Scalar_1_0.h>
 #include <uavcan/si/unit/length/Scalar_1_0.h>
 #include <uavcan/si/unit/velocity/Scalar_1_0.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/reg/udral/physics/kinematics/translation/Linear.0.1.uavcan is trying to use a serialization library that was compiled with "

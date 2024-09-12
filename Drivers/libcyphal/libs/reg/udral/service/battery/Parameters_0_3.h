@@ -36,12 +36,12 @@
 
 #include <nunavut/support/serialization.h>
 #include <reg/udral/service/battery/Technology_0_1.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <uavcan/si/unit/electric_charge/Scalar_1_0.h>
 #include <uavcan/si/unit/electric_current/Scalar_1_0.h>
 #include <uavcan/si/unit/mass/Scalar_1_0.h>
 #include <uavcan/si/unit/voltage/Scalar_1_0.h>
-#include <stdint.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/reg/udral/service/battery/Parameters.0.3.uavcan is trying to use a serialization library that was compiled with "

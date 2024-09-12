@@ -1,9 +1,9 @@
 #pragma once
 
+#include <cyphal/definitions.h>
+#include <cyphal/providers/provider.h>
 #include <memory>
 
-#include "providers/provider.h"
-#include "cyphal/definitions.h"
 
 #define DEFAULT_TIMEOUT_MICROS 1000000 // 1 sec
 
@@ -24,14 +24,18 @@ public:                                                                         
     static constexpr size_t buffer_size = T##_SERIALIZATION_BUFFER_SIZE_BYTES_; \
 };
 
+/**
+ * Main class, providing all common communication functions.
+*/
 class CyphalInterface {
 private:
     const CanardNodeID node_id;
-    std::unique_ptr<AbstractCANProvider> provider;
-    CyphalInterface(CanardNodeID node_id, UtilityConfig& config) : node_id(node_id), utilities(config) {};
     UtilityConfig& utilities;
+    std::unique_ptr<AbstractCANProvider> provider;
 public:
-    template <typename Provider, class Allocator, class... Args> static CyphalInterface* create(
+    CyphalInterface(CanardNodeID node_id, UtilityConfig& config, AbstractCANProvider* provider) :
+		node_id(node_id), utilities(config), provider(provider) {};
+    template <typename Provider, class Allocator, class... Args> static CyphalInterface* create_bss(
         std::byte* buffer,
         CanardNodeID node_id,
         typename Provider::Handler handler,
@@ -40,14 +44,24 @@ public:
         UtilityConfig& config
     ) {
         std::byte** inout_buffer = &buffer;
-        auto provider  = std::unique_ptr<Provider>(Provider::template create<Allocator>(inout_buffer, handler, node_id, queue_len, args..., config));
-    
-        std::byte* interface_ptr = *inout_buffer;
-        auto interface = new (interface_ptr) CyphalInterface(node_id, config);
+        AbstractCANProvider* provider  = Provider::template create_bss<Allocator>(inout_buffer, handler, node_id, queue_len, args..., config);
 
-        interface->provider = std::move(provider);
+        std::byte* interface_ptr = *inout_buffer;
+        auto interface = new (interface_ptr) CyphalInterface(node_id, config, provider);
+
         return interface;
     }
+    template <typename Provider, class Allocator, class... Args> static std::shared_ptr<CyphalInterface> create_heap(
+		CanardNodeID node_id,
+		typename Provider::Handler handler,
+		size_t queue_len,
+		Args&&... args,
+		UtilityConfig& config
+	) {
+		AbstractCANProvider* provider  = Provider::template create_heap<Allocator>(handler, node_id, queue_len, args..., config);
+
+		return std::make_shared<CyphalInterface>(node_id, config, provider);
+	}
 
     bool is_up() { return bool(provider); }
     size_t queue_size() { return provider->queue.size; }
@@ -78,46 +92,49 @@ public:
 
     // TEMPLATES
     template <typename TypeAlias>
-    inline void send_cyphal(
+    inline void send(
         typename TypeAlias::Type* obj,
         uint8_t buffer[],
         CanardPortID port,
         CanardTransferID* transfer_id,
         CanardPriority priority,
         CanardTransferKind transfer_kind,
-        CanardNodeID to_node_id
+        CanardNodeID to_node_id,
+        uint64_t timeout_delta
     ) const;
     template <typename TypeAlias>
-    inline void send_cyphal_default_msg(
-        typename TypeAlias::Type* obj,
-        uint8_t buffer[],
-        CanardPortID port,
-        CanardTransferID* transfer_id
-    ) const;
-    template <typename TypeAlias>
-    inline void send_cyphal_default_msg_to(
+    inline void send_msg(
         typename TypeAlias::Type* obj,
         uint8_t buffer[],
         CanardPortID port,
         CanardTransferID* transfer_id,
-        CanardNodeID to_node_id
+        uint64_t timeout_delta = DEFAULT_TIMEOUT_MICROS,
+        CanardPriority priority = CanardPriorityNominal
     ) const;
     template <typename TypeAlias>
-    inline void send_cyphal_response(
+    inline void send_response(
         typename TypeAlias::Type* obj,
         uint8_t buffer[],
         CanardRxTransfer* transfer,
-        CanardPortID port
+        CanardPortID port,
+        uint64_t timeout_delta = DEFAULT_TIMEOUT_MICROS,
+        CanardPriority priority = CanardPriorityNominal
     ) const;
     template <typename TypeAlias>
-    inline void cyphal_deserialize_transfer (
+    inline void send_request(
+        typename TypeAlias::Type* obj,
+        uint8_t buffer[],
+        CanardPortID port,
+        CanardTransferID* transfer_id,
+        CanardNodeID to_node_id,
+        uint64_t timeout_delta = DEFAULT_TIMEOUT_MICROS,
+        CanardPriority priority = CanardPriorityNominal
+    ) const;
+    template <typename TypeAlias>
+    inline void deserialize_transfer (
         typename TypeAlias::Type* obj,
         CanardRxTransfer* transfer
     ) const;
 };
 
-#include "cyphal.tpp"
-
-#define PREPARE_MESSAGE(TYPE, VAR_NAME)           \
-    uint8_t VAR_NAME##_buf[TYPE##_EXTENT_BYTES_]; \
-    CanardTransferID VAR_NAME##_transfer_id = 0;
+#include <cyphal/cyphal.tpp>

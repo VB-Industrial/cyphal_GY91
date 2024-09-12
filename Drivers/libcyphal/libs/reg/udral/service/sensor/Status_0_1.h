@@ -35,10 +35,10 @@
 #define REG_UDRAL_SERVICE_SENSOR_STATUS_0_1_INCLUDED_
 
 #include <nunavut/support/serialization.h>
-#include <uavcan/si/unit/duration/Scalar_1_0.h>
-#include <uavcan/si/unit/temperature/Scalar_1_0.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <uavcan/si/unit/duration/Scalar_1_0.h>
+#include <uavcan/si/unit/temperature/Scalar_1_0.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/reg/udral/service/sensor/Status.0.1.uavcan is trying to use a serialization library that was compiled with "

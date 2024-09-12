@@ -35,9 +35,9 @@
 #define REG_UDRAL_PHYSICS_ELECTRICITY_POWER_0_1_INCLUDED_
 
 #include <nunavut/support/serialization.h>
+#include <stdlib.h>
 #include <uavcan/si/unit/electric_current/Scalar_1_0.h>
 #include <uavcan/si/unit/voltage/Scalar_1_0.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/reg/udral/physics/electricity/Power.0.1.uavcan is trying to use a serialization library that was compiled with "

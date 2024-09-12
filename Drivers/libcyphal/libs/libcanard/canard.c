@@ -2,8 +2,8 @@
 /// Copyright (c) 2016 UAVCAN Consortium.
 /// Author: Pavel Kirienko <pavel@uavcan.org>
 
-#include "canard.h"
-#include "cavl.h"
+#include <libcanard/canard.h>
+#include <libcanard/cavl.h>
 #include <string.h>
 
 // --------------------------------------------- BUILD CONFIGURATION ---------------------------------------------

@@ -1,4 +1,4 @@
-#include "LinuxCAN.h"
+#include <cyphal/providers/LinuxCAN.h>
 #ifdef __linux__
 #include <fcntl.h>
 #include <linux/can.h>
@@ -9,7 +9,7 @@
 #include <cstring>
 #include <iostream>
 
-#include "FDCAN_generic.h"
+#include <cyphal/providers/FDCAN_generic.h>
 
 LinuxCAN::LinuxCAN(const std::string& can_interface, size_t queue_len, UtilityConfig& utilities)
     : AbstractCANProvider(CANARD_MTU_CAN_FD, CANFD_MTU, queue_len, utilities) {

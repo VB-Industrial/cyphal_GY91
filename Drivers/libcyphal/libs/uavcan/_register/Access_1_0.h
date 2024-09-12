@@ -35,11 +35,11 @@
 #define UAVCAN_REGISTER_ACCESS_1_0_INCLUDED_
 
 #include <nunavut/support/serialization.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include <uavcan/_register/Name_1_0.h>
 #include <uavcan/_register/Value_1_0.h>
 #include <uavcan/time/SynchronizedTimestamp_1_0.h>
-#include <stdbool.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/register/384.Access.1.0.uavcan is trying to use a serialization library that was compiled with "

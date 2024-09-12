@@ -19,9 +19,9 @@
 // Copyright (c) 2020 Pavel Kirienko
 // Authors: Pavel Kirienko <pavel.kirienko@zubax.com>
 
-#include "o1heap.h"
 #include <assert.h>
 #include <limits.h>
+#include <o1heap/o1heap.h>
 
 // ---------------------------------------- BUILD CONFIGURATION OPTIONS
 // ----------------------------------------

@@ -1,4 +1,4 @@
-#include "cyphal.h"
+#include <cyphal/cyphal.h>
 
 #ifdef __linux__
 #include <iostream>

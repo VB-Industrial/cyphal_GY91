@@ -24,6 +24,7 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ramfunc.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_iwdg.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h \
@@ -32,9 +33,9 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Core/Inc/ruka_joints.h ../Core/Inc/main.h \
  ../Drivers/libcyphal/cyphal/cyphal.h \
+ ../Drivers/libcyphal/cyphal/definitions.h \
  ../Drivers/libcyphal/cyphal/providers/provider.h \
  ../Drivers/libcyphal/cyphal/allocators/allocator.h \
- ../Drivers/libcyphal/cyphal/definitions.h \
  ../Drivers/libcyphal/libs/libcanard/canard.h \
  ../Drivers/libcyphal/cyphal/cyphal.tpp \
  ../Drivers/libcyphal/cyphal/providers/G4CAN.h \
@@ -61,9 +62,6 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/libcyphal/libs/uavcan/_register/Access_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/_register/Name_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/_register/Value_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Bit_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer16_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer32_1_0.h \
@@ -76,8 +74,13 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Real16_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Real32_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/primitive/array/Real64_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h
+ ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h \
+ ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -104,6 +107,7 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ramfunc.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_iwdg.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h:
@@ -113,9 +117,9 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Core/Inc/ruka_joints.h:
 ../Core/Inc/main.h:
 ../Drivers/libcyphal/cyphal/cyphal.h:
+../Drivers/libcyphal/cyphal/definitions.h:
 ../Drivers/libcyphal/cyphal/providers/provider.h:
 ../Drivers/libcyphal/cyphal/allocators/allocator.h:
-../Drivers/libcyphal/cyphal/definitions.h:
 ../Drivers/libcyphal/libs/libcanard/canard.h:
 ../Drivers/libcyphal/cyphal/cyphal.tpp:
 ../Drivers/libcyphal/cyphal/providers/G4CAN.h:
@@ -142,9 +146,6 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/libcyphal/libs/uavcan/_register/Access_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/_register/Name_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/_register/Value_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Bit_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer16_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer32_1_0.h:
@@ -157,5 +158,10 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Real16_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Real32_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/primitive/array/Real64_1_0.h:
+../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h:
+../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h:
+../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h:
+../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h:
+../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h:

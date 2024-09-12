@@ -21,6 +21,7 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "i2c.h"
+#include "iwdg.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -95,6 +96,7 @@ int main(void)
   MX_FDCAN1_Init();
   MX_I2C4_Init();
   MX_USART2_UART_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
   cyphal_can_starter(&hfdcan1);
   setup_cyphal(&hfdcan1);
@@ -113,13 +115,13 @@ int main(void)
 
 
   uint32_t last_hbeat = HAL_GetTick();
+  uint32_t last_imu_send = HAL_GetTick();
 
   vec_4ax linear = {0};
   vec_4ax quat = {0};
   vec_4ax gyro = {0};
 
-  //rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
-  //rv = MPU6050_isReady(&hi2c4);
+
   IMU_setup();
 
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
@@ -127,17 +129,22 @@ int main(void)
   while (1)
   {
       uint32_t now = HAL_GetTick();
-      if ( (now - last_hbeat) >= 50) //50 milliseconds soft delay
+      if ( (now - last_imu_send) >= 50) //50 milliseconds soft delay
       {
       	  imu_get_quat(&quat);
       	  imu_get_linear(&linear);
       	  imu_get_gyro(&gyro);
-          last_hbeat = now;
+      	  last_imu_send = now;
           heartbeat();
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
           HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+      }
+      if ( (now - last_hbeat) >= 1000) //1 second soft delay
+      {
+          heartbeat();
+          last_hbeat = now;
       }
       cyphal_loop();
 
@@ -165,8 +172,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;

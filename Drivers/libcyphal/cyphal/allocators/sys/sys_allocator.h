@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../allocator.h"
+#include <cyphal/allocators/allocator.h>
 
 class SystemAllocator : public AbstractAllocator {
 public:

@@ -35,12 +35,12 @@
 #define UAVCAN_METATRANSPORT_CAN_FRAME_0_2_INCLUDED_
 
 #include <nunavut/support/serialization.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <uavcan/metatransport/can/DataClassic_0_1.h>
 #include <uavcan/metatransport/can/DataFD_0_1.h>
 #include <uavcan/metatransport/can/Error_0_1.h>
 #include <uavcan/metatransport/can/RTR_0_1.h>
-#include <stdint.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/metatransport/can/Frame.0.2.uavcan is trying to use a serialization library that was compiled with "

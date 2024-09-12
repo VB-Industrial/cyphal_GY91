@@ -35,9 +35,9 @@
 #define UAVCAN_TIME_GET_SYNCHRONIZATION_MASTER_INFO_0_1_INCLUDED_
 
 #include <nunavut/support/serialization.h>
+#include <stdlib.h>
 #include <uavcan/time/TAIInfo_0_1.h>
 #include <uavcan/time/TimeSystem_0_1.h>
-#include <stdlib.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/time/510.GetSynchronizationMasterInfo.0.1.uavcan is trying to use a serialization library that was compiled with "

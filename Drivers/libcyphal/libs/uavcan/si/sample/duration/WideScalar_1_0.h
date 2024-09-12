@@ -35,8 +35,8 @@
 #define UAVCAN_SI_SAMPLE_DURATION_WIDE_SCALAR_1_0_INCLUDED_
 
 #include <nunavut/support/serialization.h>
-#include <uavcan/time/SynchronizedTimestamp_1_0.h>
 #include <stdlib.h>
+#include <uavcan/time/SynchronizedTimestamp_1_0.h>
 
 static_assert( NUNAVUT_SUPPORT_LANGUAGE_OPTION_TARGET_ENDIANNESS == 434322821,
               "/home/user/UAVCAN_WS/public_regulated_data_types/uavcan/si/sample/duration/WideScalar.1.0.uavcan is trying to use a serialization library that was compiled with "
