@@ -16,6 +16,6 @@
 ../Core/Inc/MPU9250.h:683:14:MadgwickQuaternionUpdate	3
 ../Core/Inc/MPU9250.h:779:18:MahonyQuaternionUpdate	3
 ../Core/Src/main.c:70:5:main	2
-../Core/Src/main.c:155:6:SystemClock_Config	3
-../Core/Src/main.c:197:6:delay	1
-../Core/Src/main.c:209:6:Error_Handler	1
+../Core/Src/main.c:156:6:SystemClock_Config	3
+../Core/Src/main.c:198:6:delay	1
+../Core/Src/main.c:210:6:Error_Handler	1

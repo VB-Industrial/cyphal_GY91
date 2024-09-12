@@ -119,18 +119,19 @@ int main(void)
   vec_4ax gyro = {0};
 
   //rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
-  //IMU_setup();
+  //rv = MPU6050_isReady(&hi2c4);
+  IMU_setup();
 
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
 
   while (1)
   {
-
       uint32_t now = HAL_GetTick();
-      if ( (now - last_hbeat) >= 100) {
-      	  //imu_get_quat(&quat);
-      	  //imu_get_linear(&linear);
-      	  //imu_get_gyro(&gyro);
+      if ( (now - last_hbeat) >= 50) //50 milliseconds soft delay
+      {
+      	  imu_get_quat(&quat);
+      	  imu_get_linear(&linear);
+      	  imu_get_gyro(&gyro);
           last_hbeat = now;
           heartbeat();
           //sprintf(msg,"%d\n\0", q[1]);

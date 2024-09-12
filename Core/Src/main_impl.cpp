@@ -54,18 +54,6 @@ public:
 
 HBeatReader* h_reader;
 
-class JSReader: public AbstractSubscription<JS_msg> {
-public:
-	JSReader(InterfacePtr interface): AbstractSubscription<JS_msg>(interface,
-        // Тут параметры - port_id, transfer kind или только port_id
-		JS_SUB_PORT_ID
-    ) {};
-    void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override {
-    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-    }
-};
-
-JSReader* js_reader;
 
 
 class RegisterListReader : public AbstractSubscription<RegisterListRequest> {
@@ -89,24 +77,6 @@ public:
 };
 
 
-
-
-void send_JS(float* pos, float* vel, float* eff) {
-	static uint8_t js_buffer[JS_msg::buffer_size];
-	static CanardTransferID int_transfer_id = 0;
-	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
-	{
-			.angular_position = *pos,
-			.angular_velocity = *vel,
-			.angular_acceleration = *eff
-	};
-    interface->send_cyphal_default_msg<JS_msg>(
-		&js_msg,
-		js_buffer,
-		AGENT_JS_SUB_PORT,
-		&int_transfer_id
-	);
-}
 
 void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz)
 {
@@ -162,7 +132,6 @@ void setup_cyphal(FDCAN_HandleTypeDef* handler) {
 		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
 	);
 	h_reader = new HBeatReader(interface);
-	js_reader = new JSReader(interface);
 }
 
 void cyphal_loop() {
