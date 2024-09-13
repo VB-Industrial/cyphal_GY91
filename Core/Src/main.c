@@ -135,7 +135,6 @@ int main(void)
       	  imu_get_linear(&linear);
       	  imu_get_gyro(&gyro);
       	  last_imu_send = now;
-          heartbeat();
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);

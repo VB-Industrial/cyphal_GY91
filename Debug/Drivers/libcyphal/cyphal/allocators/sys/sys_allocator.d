@@ -1,7 +1,7 @@
 Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.o: \
  ../Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.cpp \
  ../Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.h \
- ../Drivers/libcyphal/cyphal/allocators/sys/../allocator.h \
+ ../Drivers/libcyphal/cyphal/allocators/allocator.h \
  ../Drivers/libcyphal/cyphal/definitions.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
@@ -37,7 +37,7 @@ Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.o: \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Drivers/libcyphal/libs/libcanard/canard.h
 ../Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.h:
-../Drivers/libcyphal/cyphal/allocators/sys/../allocator.h:
+../Drivers/libcyphal/cyphal/allocators/allocator.h:
 ../Drivers/libcyphal/cyphal/definitions.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:

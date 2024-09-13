@@ -1,8 +1,7 @@
 Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.o: \
  ../Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.cpp \
  ../Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.h \
- ../Drivers/libcyphal/libs/o1heap/o1heap.h \
- ../Drivers/libcyphal/cyphal/allocators/o1/../allocator.h \
+ ../Drivers/libcyphal/cyphal/allocators/allocator.h \
  ../Drivers/libcyphal/cyphal/definitions.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
@@ -36,10 +35,10 @@ Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.o: \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Drivers/libcyphal/libs/libcanard/canard.h
+ ../Drivers/libcyphal/libs/libcanard/canard.h \
+ ../Drivers/libcyphal/libs/o1heap/o1heap.h
 ../Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.h:
-../Drivers/libcyphal/libs/o1heap/o1heap.h:
-../Drivers/libcyphal/cyphal/allocators/o1/../allocator.h:
+../Drivers/libcyphal/cyphal/allocators/allocator.h:
 ../Drivers/libcyphal/cyphal/definitions.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -74,3 +73,4 @@ Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.o: \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
 ../Drivers/libcyphal/libs/libcanard/canard.h:
+../Drivers/libcyphal/libs/o1heap/o1heap.h:

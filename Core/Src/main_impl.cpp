@@ -139,48 +139,23 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 {
 
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
-	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(1125);//JS_SUB_PORT_ID
-	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
-	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
+	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_);
+	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_HB);
 
-	static FDCAN_FilterTypeDef sFilterConfig;
-	static FDCAN_FilterTypeDef hbFilterConfig;
-	static FDCAN_FilterTypeDef niFilterConfig;
+	static FDCAN_FilterTypeDef consFilterConfig;
 
-	niFilterConfig.IdType = FDCAN_EXTENDED_ID;
-	niFilterConfig.FilterIndex = 0;
-	niFilterConfig.FilterType = FDCAN_FILTER_MASK;
-	niFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	niFilterConfig.FilterID1 =  cyphal_filter_for_node_id.extended_can_id;
-	niFilterConfig.FilterID2 =  cyphal_filter_for_node_id.extended_mask;
-
-	sFilterConfig.IdType = FDCAN_EXTENDED_ID;
-	sFilterConfig.FilterIndex = 0;
-	sFilterConfig.FilterType = FDCAN_FILTER_MASK;
-	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	sFilterConfig.FilterID1 =  cyphal_filter_for_JS.extended_can_id;
-	sFilterConfig.FilterID2 =  cyphal_filter_for_JS.extended_mask;
-
-	hbFilterConfig.IdType = FDCAN_EXTENDED_ID;
-	hbFilterConfig.FilterIndex = 1;
-	hbFilterConfig.FilterType = FDCAN_FILTER_MASK;
-	hbFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	hbFilterConfig.FilterID1 =  cyphal_filter_for_HB.extended_can_id;
-	hbFilterConfig.FilterID2 =  cyphal_filter_for_HB.extended_mask;
-
-
+	consFilterConfig.IdType = FDCAN_EXTENDED_ID;
+	consFilterConfig.FilterIndex = 0;
+	consFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	consFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	consFilterConfig.FilterID1 =  cyphal_filter_consolidated.extended_can_id;
+	consFilterConfig.FilterID2 =  cyphal_filter_consolidated.extended_mask;
 
 	if (HAL_FDCAN_ConfigGlobalFilter(hfdcan, FDCAN_REJECT, FDCAN_REJECT, FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
 	{
 	  Error_Handler();
 	}
-	if (HAL_FDCAN_ConfigFilter(hfdcan, &niFilterConfig) != HAL_OK) {
-	  Error_Handler();
-	}
-//	if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
-//	  Error_Handler();
-//	}
-	if (HAL_FDCAN_ConfigFilter(hfdcan, &hbFilterConfig) != HAL_OK) {
+	if (HAL_FDCAN_ConfigFilter(hfdcan, &consFilterConfig) != HAL_OK) {
 	  Error_Handler();
 	}
 
@@ -190,10 +165,10 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 	if (HAL_FDCAN_EnableTxDelayCompensation(hfdcan) != HAL_OK) {
 	  Error_Handler();
 	}
-//	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
-//	{
-//	  Error_Handler();
-//	}
+	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+	{
+	  Error_Handler();
+	}
 
 	HAL_FDCAN_Start(hfdcan);
 }
