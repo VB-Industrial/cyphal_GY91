@@ -53,12 +53,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void cyphal_loop();
-void heartbeat();
-void send_JS(float*, float*, float*);
-void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
-void setup_cyphal(FDCAN_HandleTypeDef*);
-void cyphal_can_starter(FDCAN_HandleTypeDef*);
+void app(void);
 void delay(uint32_t);
 /* USER CODE END EFP */
 
@@ -73,7 +68,8 @@ void delay(uint32_t);
 
 
 
-#define JOINT_N 7
+#define JOINT_N 9
+
 #define WHO_AM_I_REG 0x75
 #define PWR_MGMT_1_REG 0x6B
 #define SMPLRT_DIV_REG 0x19

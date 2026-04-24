@@ -1,0 +1,98 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Build firmware + Debug (OpenOCD)",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "launch",
+            "preLaunchTask": "Build firmware",
+            "servertype": "openocd",
+            "executable": "${workspaceFolder}/build/RelWithDebInfo/bno055_cyphal_reader.elf",
+            "device": "STM32G474RETx",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "serverpath": "openocd",
+            "gdbPath": "gdb-multiarch",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32g4x.cfg"
+            ],
+            "serverArgs": [
+                "-c",
+                "transport select hla_swd",
+                "-c",
+                "adapter speed 4000"
+            ]
+        },
+        {
+            "name": "Build + Flash + Debug (OpenOCD)",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "launch",
+            "preLaunchTask": "Build + Flash",
+            "servertype": "openocd",
+            "executable": "${workspaceFolder}/build/RelWithDebInfo/bno055_cyphal_reader.elf",
+            "device": "STM32G474RETx",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "serverpath": "openocd",
+            "gdbPath": "gdb-multiarch",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32g4x.cfg"
+            ],
+            "serverArgs": [
+                "-c",
+                "transport select hla_swd",
+                "-c",
+                "adapter speed 4000"
+            ]
+        },
+        {
+            "name": "Attach to Microcontroller - OpenOCD",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "servertype": "openocd",
+            "executable": "${workspaceFolder}/build/RelWithDebInfo/bno055_cyphal_reader.elf",
+            "device": "STM32G474RETx",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "serverpath": "openocd",
+            "gdbPath": "gdb-multiarch",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32g4x.cfg"
+            ],
+            "serverArgs": [
+                "-c",
+                "transport select hla_swd",
+                "-c",
+                "adapter speed 4000"
+            ]
+        },
+        {
+            "name": "Attach: Cyphal Service RX Diagnostics",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "servertype": "openocd",
+            "executable": "${workspaceFolder}/build/RelWithDebInfo/bno055_cyphal_reader.elf",
+            "device": "STM32G474RETx",
+            "interface": "swd",
+            "serverpath": "openocd",
+            "gdbPath": "gdb-multiarch",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32g4x.cfg"
+            ],
+            "serverArgs": [
+                "-c",
+                "transport select hla_swd",
+                "-c",
+                "adapter speed 4000"
+            ]
+        }
+    ]
+}

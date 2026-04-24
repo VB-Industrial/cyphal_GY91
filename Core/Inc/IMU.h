@@ -22,13 +22,28 @@ typedef struct
   float w;
 } vec_4ax;
 
+typedef struct
+{
+  uint8_t calib_stat;
+  uint8_t selftest_result;
+  uint8_t intr_stat;
+  uint8_t sys_clk_stat;
+  uint8_t sys_stat;
+  uint8_t sys_err;
+} imu_status_t;
+
 void IMU_setup(void);
 void IMU_process(void);
+void imu_begin_sample(void);
 
 void imu_get_quat(vec_4ax *vector);
 void imu_get_linear(vec_4ax *vector);
+void imu_get_gravity(vec_4ax *vector);
+void imu_get_accel(vec_4ax *vector);
+void imu_get_mag(vec_4ax *vector);
 void imu_get_gyro(vec_4ax *vector);
 void imu_get_euler(vec_4ax *vector);
+bool imu_read_status(imu_status_t* status);
 
 vec_4ax createQuaternionMsgFromYaw(float yaw);
 

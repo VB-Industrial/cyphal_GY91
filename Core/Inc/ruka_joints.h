@@ -38,6 +38,7 @@
 #define JS_SUB_6_PORT_ID 1126
 
 #define AGENT_IMU_PORT 1337
+#define AGENT_IMU_2_PORT 1338
 
 //#define JS_PUB_PORT_ID
 //#define JS_SUB_PORT_ID

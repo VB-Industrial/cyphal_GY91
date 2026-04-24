@@ -27,9 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "MPU6050.h"
-#include "MPU9250.h"
-#include "IMU.h"
+#include "app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,8 +58,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//I2C_HandleTypeDef hi2c4;
-extern I2C_HandleTypeDef hi2c4;
 /* USER CODE END 0 */
 
 /**
@@ -96,62 +92,17 @@ int main(void)
   MX_FDCAN1_Init();
   MX_I2C4_Init();
   MX_USART2_UART_Init();
-  MX_IWDG_Init();
+  //MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-  cyphal_can_starter(&hfdcan1);
-  setup_cyphal(&hfdcan1);
+  app();
   /* USER CODE END 2 */
 
-  /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-
-  uint8_t msg[10];
-  int i = 0;
-
-  //uint16_t addr9250=0xD0; //0x68<<1
-
-  HAL_StatusTypeDef rv;
-
-
-  uint32_t last_hbeat = HAL_GetTick();
-  uint32_t last_imu_send = HAL_GetTick();
-
-  vec_4ax linear = {0};
-  vec_4ax quat = {0};
-  vec_4ax gyro = {0};
-
-
-  IMU_setup();
-
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
-
   while (1)
   {
-      uint32_t now = HAL_GetTick();
-      if ( (now - last_imu_send) >= 50) //50 milliseconds soft delay
-      {
-      	  imu_get_quat(&quat);
-      	  imu_get_linear(&linear);
-      	  imu_get_gyro(&gyro);
-      	  last_imu_send = now;
-          //sprintf(msg,"%d\n\0", q[1]);
-          //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-          send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
-          HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-      }
-      if ( (now - last_hbeat) >= 1000) //1 second soft delay
-      {
-          heartbeat();
-          last_hbeat = now;
-      }
-      cyphal_loop();
-
-  }
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-
+  }
   /* USER CODE END 3 */
 }
 
